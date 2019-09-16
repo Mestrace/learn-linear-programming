@@ -1,0 +1,130 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+\usepackage{graphicx}
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\begin{document}
+
+% ========== Edit your name here
+\author{Yida Liu}
+\title{MSOR 411 Project 1 Part I}
+\maketitle
+
+\medskip
+
+% ========== Begin answering questions here
+\begin{enumerate}
+
+\item Formulate a Production Model \par
+
+We follow the standardized procedures on model formulation.
+
+\begin{enumerate}
+    \item Identify the variables \par
+    In this production model, we will consider the sales of different types of gasoline and the costs of their blending constituents. We define the following variables for our model:
+    \begin{itemize}
+        \item $G_g, g \in [R, U, S]$: The production of different type of gasoline. (bbl / day)
+        \item $X_i, i\in [1,..,4]$: The consumption of different types of blending constituents. (bbl / day)
+    \end{itemize}
+    
+    \item Identify the objective function \par
+    The goal for Hexxon Oil Company is to maximize the profit for their production, which is the sales of gasoline subtracted by the costs of the raw materials. Therefore, we have
+    $$\max_{G_g, X_i} \sum_{g} P_g G_g - \sum_{i} C_i X_i$$
+    where $P_g$ is the unit selling price for each type of gasoline and $C_i$ is the unit cost of the blending constituents. Filling in the numbers, we get
+    $$\max_{G_g, X_i} 16.5 G_R + 18 G_U + 22.5 G_S - 15X_1 - 12 X_2 - 9 X_3 - 24X_4$$
+    
+    \item Identify the constraints \par
+    \begin{itemize}
+        \item Octane Rating Constraint \par
+        There are minimum octane rating for gasoline in different grade. The octane rating for a type of gasoline is calculated by averaging the octane rating for all the blending constituents in this product. For this, we define additional variables to express the constrain in mathematical terms.
+        \begin{itemize}
+            \item $O_i, i \in [1,..,4]$: the actual octane rating of the blending constituents.
+            \item $\mathit{MO_g}, g \in [R, U, S]$: the minimum octane rating requirement of the produced gasoline (known constant).
+            \item $X_{ig}, g \in [R, U, S], i \in [1,..,4]$: The consumption of blending constituent $i$ on producing gasoline $g$ (bbl / day). 
+        \end{itemize}
+        We also notice the target variable $X_i$ could be expressed as the combination of the new variables.
+        $$X_i = \sum_g X_{ig}$$
+        Then, the generic expression for minimum octane rating constraint could be express in the form:
+        $$\frac{\sum_i O_iX_{ig}}{\sum_i X_{ig}} \geq \mathit{MO_g}$$
+        which could be further simplifed to
+        $$\sum_i (O_i - MO_g) X_{ig} \geq 0$$
+        Hence, we arrive at the following minimum octane rating requirements for the three different types of gasolines that Hexxon Oil Company are producing.
+        \begin{align*}
+            12X_{1R} + 6X_{2R} + 3X_{3R} + 20X_{4R} &\geq 0 \\
+            6X_{1U} + 0X_{2U} - 3X_{3U} + 14X_{4U} &\geq 0 \\
+            2X_{1S} - 4X_{2S} - 7X_{3S} + 10X_{4S} &\geq 0 \\
+        \end{align*}
+        \item Demand Constraint \par
+        There is a certain demand for each type of gasoline that must be met with the production plan.
+        \begin{align*}
+            G_R \geq 2000 \\
+            G_U \geq 4000 \\
+            G_S \geq 3000
+        \end{align*}
+        
+        \item Supply Constraint \par
+        There is a certain supply upper limit for each type of blending constituent that the production plan must not exist.
+        \begin{align*}
+            X_{1R} + X_{1U} + X_{1S} & \leq 2500 \\
+            X_{2R} + X_{2U} + X_{2S} & \leq 3000 \\
+            X_{3R} + X_{3U} + X_{3S} & \leq 3500 \\
+            X_{4R} + X_{4U} + X_{4S} & \leq 2000 \\
+        \end{align*}
+        
+        \item Logical Constraint \par
+        All variable must be greater than zero.
+        $G_g, X_{ig}, i \in [1,..,4], g \in [R, U, S] \geq 0$
+    \end{itemize}
+    \item Formulate the model\par
+    For all the information specified above, we formulate the following optimization model for Hexxon Oil Company.
+    \begin{align*}
+        &\max_{G_g, X_{gi}} & & 16.5 G_R + 18 G_U + 22.5 G_S - 15\sum_g X_{1g} - 12 \sum_g X_{2g} - 9 \sum_g X_{3g} - 24\sum_g X_{4g} \\
+        &s.t. && 12X_{1R} + 6X_{2R} + 3X_{3R} + 20X_{4R} \geq 0  \\
+            &&&   6X_{1U} + 0X_{2U} - 3X_{3U} + 14X_{4U} \geq 0 \\
+            &&&   2X_{1S} - 4X_{2S} - 7X_{3S} + 10X_{4S} \geq 0 \\
+            &&& G_R \geq 2000 \\
+            &&& G_U \geq 4000 \\
+            &&& G_S \geq 3000 \\ 
+            &&& X_{1R} + X_{1U} + X_{1S}  \leq 2500 \\
+            &&& X_{2R} + X_{2U} + X_{2S}  \leq 3000 \\
+            &&& X_{3R} + X_{3U} + X_{3S}  \leq 3500 \\
+            &&& X_{4R} + X_{4U} + X_{4S}  \leq 2000 \\
+            &&& G_g, X_{ig}, i \in [1,..,4], g \in [R, U, S] \geq 0
+    \end{align*}
+\end{enumerate}
+
+\textit{Note that this model is not a linear model since the variable has units (bbl / day) that must be integers}.
+
+\item Update the objective function\par
+In this part of the problem, we are aware that the cost of blending constituent 1 varies when used in making supreme gas. With the new information given, we must update the objective function we obtained at 1.b and 1.d. With the newly added condition, we still have the generic objective function
+    $$\max_{G_g, X_i} \sum_{g} P_g G_g - \sum_{i} \sum_{g}C_i X_{ig}$$
+where $P_g$ is the unit selling price for each type of gasoline and $C_i$ is the unit cost of the blending constituents. However, in this case, the unit cost of blending constituent 1, $C_1$, instead of being an constant, is now a function of the number of barrel used $X_1$ and the type of gas that is being used, $g$.
+
+$$C_1(X_1, g) = 
+\begin{cases}
+    13.5 + 0.001X_1 & \text{if }  g = S \\ 
+    15 & \text{otherwise} 
+\end{cases}
+$$
+
+Filling in the numbers, we obtain 
+
+\begin{multline*}
+\max_{G_g, X_{gi}} 16.5 G_R + 18 G_U + 22.5 G_S - \sum_g C_1(\sum_{g'}{X_{1g'}}, g) X_1g- 12 \sum_g X_{2g} - 9 \sum_g X_{3g} - 24\sum_g X_{4g}
+\end{multline*}
+
+\textit{Note that this model would not be a linear model since the cost of constituent 1 is not linear.}
+
+% ========== Continue adding items as needed
+
+\end{enumerate}
+
+\end{document}
+\grid
+\grid
