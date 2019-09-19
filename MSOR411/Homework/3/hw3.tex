@@ -1,0 +1,116 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+\usepackage{graphicx}
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\begin{document}
+
+% ========== Edit your name here
+\author{Yida Liu}
+\title{MSOR 411 Homework 3}
+\maketitle
+
+% ========== Begin answering questions here
+\section{Problem 1}
+
+We used the solver extension in EXCEL to obtain the solution and sensitivity report for the Blubbermaid problem. The production plan obtained produces 1000 pounds of Airtex, 533.3333 pound of Extendex, and 400 pound of Resistex. The profit is \$13133.3333.
+
+\subsection{Which constraints are binding?}
+    \begin{itemize}
+        \item Resource Used - Polymer A : binding (slack variable = 0)
+        \item Resource Used - Polymer B : non-binding (slack variable = 2533.3333)
+        \item Resource Used - Polymer C : non-binding (slack variable = 3333.3333)
+        \item Resource Used - Base      : non-binding (slack variable = 6000)
+    \end{itemize}
+    
+\subsection{With the current production plan, for which of the three products can an additional demand of 5\% be met?}
+We modify the original Blubbermaid problem to answer this question. The modification was done by appling a 5\% increase on the demand of one of the three product, Airtex, Extendex and Resistex, respectively, while the rest of the two remain the same. This gives us three different cases to discuss in the following part.
+\begin{itemize}
+    \item \textbf{Increase the demand of Airtex by 5\%} \par
+    This modification will make the problem infeasible, therefore, cannot be achieved. The main cause is the limited supply of Polymer A. However, if the supply of Polymer A is increased by 100, the demand of current problem will be satisfied.
+    \item \textbf{Increase the demand of Extendex by 5\%} \par
+    This modification can be achieved, which yields the same solution of the original problem.
+    \item \textbf{Increase the demand of Resistex by 5\%} \par
+    This modification will make the problem infeasible, therefore, cannot be achieved. The main cause is the limited supply of Polymer A. However, if the supply of Polymer A is increased by 20, the demand of current problem will be satisfied.
+\end{itemize}
+
+\subsection{If you could obtain additional quantities of only one of the three polymers, which one would you recommend? Explain.}
+I would obtain additional quantity of Polymer. From the problem already solved (original problem, 3 modified problem with increased demand), there is a trend that Polymer A is the variable that limits the production: for feasible problems, Polymer A is always binding; for unfeasible problems, they can be made feasible by violating the resource constraint of Polymer A.
+\subsection{Which profit coefficients could double, while keeping all other coefficients fixed, without affecting the optimal production plan? Explain.}
+The Extendex profit could be doubled without affecting current solution. This is obtained from the sensitivity report of the Variables, as shown in Table \ref{table:1}. When the coefficient is doubled, only the Extendex coefficient falls in the sensitivity range.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        Product  & Coefficient & Allowable Increase & Allowable Decrease & Range              \\
+        \hline
+        Airtex   & 7           & 2.3333             & 1e30               & $[7-1e30, 9.3333]$ \\
+        Extendex & 7           & 1e30               & 1.75               & $[5.25, 1e30+7]$   \\
+        Resistex & 6           & 8                  & 1e30               & $[6-1e30, 14]$     \\
+        \hline
+    \end{tabular}
+    \caption{Variable sensitivity in Original Blubbermaid Problem}
+    \label{table:1}
+\end{table}
+
+\section{Problem 2}
+\subsection{The profit from Extendex has just decreased by 20\%. What is new production plan and total profit?}
+The new production plan will remain the same of the original problem, which gives 1000 pounds of Airtex, 533.3333 pound of Extendex, and 400 pound of Resistex. The new profit will be \$13133.3333. This could be explained by the sensitivity range of the Extendex coefficient, as shown in Table \ref{table:1}. The decreased profit is still in the sensitivity range: $7 \times 80\% = 5.6 \in [5.25, 1e30+7]$. 
+
+\subsection{The commitment to produce 400 pounds of Resistex has just dropped by 10\%. What happens to the optimal profit? Explain.}
+The new production plan will yield 1000 pounds of Airtex, 613.3333 pounds of Extendex, and 360 pounds of Resistex. The new profit will be \$13453.3333. Note that the profit actually increased when the demand for Resistex decreased. As shown in Table \ref{table:2}, the shadow price of Resistex is -8, meaning that each pound of Resistex will result in \$8 decrease in the profit.
+
+\begin{table}[b]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\begin{tabular}[c]{@{}l@{}}Demand\\ Constraint\end{tabular} & \begin{tabular}[c]{@{}l@{}}Shadow \\ Price\end{tabular} & Constraint RHS & Allowable Increase & \begin{tabular}[c]{@{}l@{}}Allowable \\ Decrease\end{tabular} \\
+\hline
+Airtex                                                      & -2.3333                                                 & 1000           & 25                 & 1000                                                          \\
+Extendex                                                    & 0                                                       & 500            & 33.3333            & 1e30                                                          \\
+Resistex                                                    & -8                                                      & 400            & 16.6666            & 375   \\
+\hline
+\end{tabular}
+\caption{Demand constraint sensitivity in Original Blubbermaid Problem}
+\label{table:2}
+\end{table}
+
+\subsection{The company wants to boost its profits to \$18,000 by purchasing more of polymer A. How much additional polymer A is needed? Explain.}
+
+2110.4762 ounces of additial Polymer A is need for the increase. In this part, we solved the following optimization model, which is modified from the original model from lecture 1 slides. 
+\begin{equation}
+    \begin{aligned}
+    & \min & & 4A + 3E + 6R & \textit{(Polymer A)} &\\
+    & s.t. & & 7A + 7E + 6R \geq 18000 &\textit{(Profit)}&\\ 
+    &&& 2A + 2E + 3R \leq 6800 &\textit{(Polymer B)} &\\
+    &&& 4A + 2E + 5R \leq 10400 &\textit{(Polymer C)} &\\
+    &&& 6A + 9E + 2R \leq 17600 &\textit{(Base)} &\\
+    &&& A \geq 1000 &\textit{(Airtex)}& \\
+    &&& E \geq 500 & \textit{(Extendex)} & \\
+    &&& R \geq 400 & \textit{(Resistex)}& \\
+    &&& A \geq 0 &\textit{(Logical)}& \\
+    &&& E \geq 0 & \textit{(Locgial)} & \\
+    &&& R \geq 0 & \textit{(Locgial)} & \\
+    \end{aligned}
+    \label{eq:1}
+\end{equation}
+
+In this model, we solve for the minimized demand for Polymer A, while satisfying the profit constraint and all other constraint from the original problem. The production plan we obtained produces 1161.90476 pounds of Airtex, 110.95238 pounds of Extendex and 360 pounds of Resistex. The new profit is \$18000. A total of 10110.4762 ounces of Polymer A is used, which is increased by 2110.4762 ounces from the original resource limit of Polymer A. 
+
+\section{If the demand for Airtex increases by 2\%, what is the new optimal production plan? Explain.}
+
+The optimal production plan will not change. The 2\% increament for Airtex demand is 20 pounds. From Table \ref{table:2}, we know that the sensitivity value of Airtex of allowable increment is 25. That is, when the increment of Airtex demand is less than 25, the optimal solution will not change for the problem. 
+
+% ========== Continue adding items as needed
+
+
+\end{document}
+\grid
+\grid
