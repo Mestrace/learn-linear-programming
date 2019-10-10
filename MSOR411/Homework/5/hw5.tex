@@ -1,0 +1,306 @@
+\documentclass[11pt]{article}
+\usepackage{stmaryrd, amsmath,amssymb,amsfonts,amsthm}
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+
+\usepackage{graphicx}
+
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\begin{document}
+
+% ========== Edit your name here
+\author{Yida Liu}
+\title{MSOR 411 Homework 4}
+\maketitle
+
+\section{LP page 142, Exercise 5.1.1}\label{prob:1}
+
+Here we list all possible initial bfs for the given problem.
+
+\begin{enumerate}
+    \item \begin{align*}
+        & B = [A_1, A_2]=\begin{bmatrix} 1 & 3 \\ 0 & 1\end{bmatrix} & N = [A_3, A_4]=\begin{bmatrix} 2 & 2 \\ 0 & 1\end{bmatrix} \\
+        & x_B = \begin{bmatrix} 1 & -3 \\ 0 & 1\end{bmatrix} \begin{bmatrix} 5 \\ 6 \end{bmatrix} = \begin{bmatrix} -13 \\ 6 \end{bmatrix} & x_N = \begin{bmatrix} 0 \\ 0\end{bmatrix} \\
+        & x = (-13, 6, 0, 0) &\\
+        & \text{Non-negativity constraint violated. No bfs generated.} &
+    \end{align*}
+    
+    \item \begin{align*}
+        & B = [A_1, A_3]=\begin{bmatrix} 1 & 2 \\ 0 & 2\end{bmatrix} & N = [A_2, A_4]=\begin{bmatrix} 3 & 0 \\ 1 & 1\end{bmatrix} \\
+        & x_B = \begin{bmatrix} 1 & -1 \\ 0 & \frac{1}{2}\end{bmatrix} \begin{bmatrix} 5 \\ 6 \end{bmatrix} = \begin{bmatrix} -1 \\ 3 \end{bmatrix} & x_N = \begin{bmatrix} 0 \\ 0\end{bmatrix} \\
+        & x = (-1, 0, 3, 0) &\\
+        & \text{Non-negativity constraint violated. No bfs generated.} &
+    \end{align*}
+    
+    \item \begin{align*}
+        & B = [A_1, A_4] = \begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix}& N = [A_2, A_3] =\begin{bmatrix} 3 & 2 \\ 1 & 2\end{bmatrix}\\    
+        & x_B = \begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix} \begin{bmatrix} 5 \\ 6 \end{bmatrix} = \begin{bmatrix} 5 \\ 6 \end{bmatrix} & x_N = \begin{bmatrix} 0 \\ 0\end{bmatrix} \\
+        & x = (5, 0, 0, 6) & \\
+        & \text{Objective function yield a value -11} &
+    \end{align*}
+    
+    \item \begin{align*}
+        & B = [A_2, A_3]=\begin{bmatrix} 3 & 2 \\ 1 & 2\end{bmatrix} & N = [A_1, A_4]= \begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix}\\
+        & x_B = \begin{bmatrix} \frac{1}{2} & -\frac{1}{2} \\ -\frac{1}{4} & \frac{3}{4}\end{bmatrix} \begin{bmatrix} 5 \\ 6 \end{bmatrix} = \begin{bmatrix}  -\frac{1}{2}\\ \frac{13}{4} \end{bmatrix} & x_N = \begin{bmatrix} 0 \\ 0\end{bmatrix} \\
+        & x = (0, -\frac{1}{2}, \frac{13}{4}, 0) &\\
+        & \text{Non-negativity constraint violated. No bfs generated.} &
+    \end{align*}
+    
+    \item \begin{align*}
+        & B = [A_2, A_4]=\begin{bmatrix} 3 & 0 \\ 1 & 1\end{bmatrix} & N = [A_1, A_3]=\begin{bmatrix} 1 & 2 \\ 0 & 2\end{bmatrix}\\
+        & x_B = \begin{bmatrix} \frac{1}{3} &  0 \\ -\frac{1}{3} & 1 \end{bmatrix} \begin{bmatrix} 5 \\ 6 \end{bmatrix} = \begin{bmatrix}  \frac{5}{3} \\ \frac{13}{3} \end{bmatrix} & x_N = \begin{bmatrix} 0 \\ 0\end{bmatrix} \\
+        & x = (0, \frac{5}{3}, 0,\frac{13}{3}) &\\
+        & \text{Objective function yield a value -1} &
+    \end{align*}
+    
+    \item \begin{align*}
+        & B = [A_3, A_4]=\begin{bmatrix} 2 & 0 \\ 2 & 1\end{bmatrix}& N = [A_1, A_2]=\begin{bmatrix} 1 & 3 \\ 0 & 1\end{bmatrix} \\
+        & x_B = \begin{bmatrix} \frac{1}{2} & 0 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} 5 \\ 6 \end{bmatrix} = \begin{bmatrix} \frac{5}{2} \\ 1 \end{bmatrix} & x_N = \begin{bmatrix} 0 \\ 0\end{bmatrix} \\
+        & x = (0, 0, \frac{5}{2}, 1) &\\
+        &\text{Objective function yield a value $\frac{3}{2}$} &
+    \end{align*}
+\end{enumerate}
+
+\section{LP page 142, Exercise 5.1.2}
+
+\begin{enumerate}
+    \item Is $x=(0, 0, 3, 0, 2)$ an bfs? \par
+    
+    \begin{align*}
+            & B = [A_3, A_5] = \begin{bmatrix}1 & 0 \\ 0 & 1\end{bmatrix} & N = [A_1, A_2, A_4] = \begin{bmatrix} 4 & 2 & 1 \\ 2 & 2 & 3 \end{bmatrix}
+    \end{align*}
+    Since $B$ is the identity matrix, $B$ is invertible and $$B^{-1} = B$$
+    Moreover, 
+    \begin{enumerate}
+        \raggedright 
+        \item $ x_B = B^{-1}b = I_2 \begin{bmatrix} 3 \\  2\end{bmatrix} = \begin{bmatrix} 3 \\ 2\end{bmatrix}$
+        \item $x_B \geq 0$
+        \item $x_N = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}$
+    \end{enumerate}
+    Thus, $x=(0, 0, 3, 0, 2)$ is an bfs for Exercise 5.1.2
+
+    \item Is $x=(1, 0, -1, 0, 0)$ an bfs? \par
+    It is obvious that $$x_B = [x_1, x_3] = \begin{bmatrix} 1 \\ -1\end{bmatrix} \leq 0$$
+    
+    Thus, $x=(1, 0, -1, 0, 0)$ is not an bfs for Exercise 5.1.2
+    
+    \item Is $x=(0, 1, 1, 0, 0)$ an bfs? \par
+    \begin{align*}
+        & B = [A_2, A_3] = \begin{bmatrix}2 & 1 \\ 2 & 0\end{bmatrix} & N = [A_1, A_4, A_5] = \begin{bmatrix} 4 & 1 & 0 \\ 2 & 3 & 1 \\ \end{bmatrix}
+    \end{align*}
+    The inverse of B is $$B^{-1} = \begin{bmatrix} 0 &  \frac{1}{2} \\ 1 & -1 \end{bmatrix}$$
+    $x_B = B^{-1}b = \begin{bmatrix} 0 &  \frac{1}{2} \\ 1 & -1 \end{bmatrix} \begin{bmatrix} 3 \\  2\end{bmatrix} = \begin{bmatrix} 1 \\ 1\end{bmatrix} $
+    
+    Thus, $x=(0, 1, 1, 0, 0)$ is an bfs for Exercise 5.1.2
+    
+    \item Is $x=(\frac{1}{2}, 1, 0, 0, 0)$ an bfs? \par
+    \begin{align*}
+        & B = [A_1, A_2] = \begin{bmatrix}4 & 2 \\ 2 & 2\end{bmatrix} & N = [A_3, A_4, A_5] = \begin{bmatrix} 1 & 1 & 0 \\ 0 & 3 & 1 \end{bmatrix}
+    \end{align*}
+    The inverse of B is $$B^{-1} = \begin{bmatrix} 0.5 & -0.5 \\ -0.5 & 1\end{bmatrix}$$
+    
+    However,
+    $x_B = B^{-1}b = \begin{bmatrix} 0.5 & -0.5 \\ -0.5 & 1\end{bmatrix} \begin{bmatrix} 3 \\  2\end{bmatrix} = \begin{bmatrix} 0.5 \\ 0.5\end{bmatrix} \not= \begin{bmatrix} \frac{1}{2} \\ 1\end{bmatrix}$
+    
+    Thus, $x=(\frac{1}{2}, 1, 0, 0, 0)$ is not an bfs for Exercise 5.1.2
+\end{enumerate}
+
+\section{LP page 142, Exercise 5.1.3}
+$x=(2,3,1,0,1,0, 4)$ is not a bfs for the given LP problem. 
+
+The given LP problem has 4 equations and 7 variables, among which 4 are basic variables, and 3 are non-basic ones. For non-basic variables, their corresponding value should be zero. Therefore, we expect to see at least 3 zeros for any bfs, which is not shown in the given solution. Therefore, the given solution $x=(2,3,1,0,1,0, 4)$ is not a bfs for the given LP problem. 
+
+\section{LP page 145, Exercise 5.2.1}
+Here we perform optimally test using $c_N - c_B B^{-1}N$ for each bfs in Problem \ref{prob:1}.
+
+\begin{enumerate}
+    \item bfs 3\par
+    \begin{align*}
+        & B = [A_1, A_4] = \begin{bmatrix}1 & 0 \\ 0 & 1\end{bmatrix} & N = [A_2, A_3] = \begin{bmatrix}3 & 2 \\ 1 & 2\end{bmatrix}\\
+        & B^{-1} = \begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix} & \\
+        & c_B = (-1, -1) & c_N =(2, 1)\\
+    \end{align*}
+    \begin{align*}
+         c_N - c_B B^{-1}N &= \begin{bmatrix} 2 \\ 1 \end{bmatrix} - \begin{bmatrix} -1 \\ -1 \end{bmatrix} \begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix} \begin{bmatrix}3 & 2 \\ 1 & 2\end{bmatrix} \\
+        &= \begin{bmatrix} 2 \\ 1 \end{bmatrix} - \begin{bmatrix} -4 \\ -4 \end{bmatrix} \\
+        &= \begin{bmatrix} 6 \\ 5 \end{bmatrix}
+    \end{align*}
+    
+    \item bfs 5\par
+    \begin{align*}
+        & B = [A_2, A_4]=\begin{bmatrix} 3 & 0 \\ 1 & 1\end{bmatrix} & N = [A_1, A_3]=\begin{bmatrix} 1 & 2 \\ 0 & 2\end{bmatrix}\\
+        & B^{-1} = \begin{bmatrix} \frac{1}{3} &  0 \\ -\frac{1}{3} & 1 \end{bmatrix} & \\
+        & c_B = (2, -1) & c_N =(-1,1)\\
+    \end{align*}
+    \begin{align*}
+         c_N - c_B B^{-1}N &=  \begin{bmatrix} -1 \\ 1 \end{bmatrix}  - \begin{bmatrix} 2 \\ -1 \end{bmatrix} \begin{bmatrix} \frac{1}{3} &  0 \\ -\frac{1}{3} & 1 \end{bmatrix} \begin{bmatrix} 1 & 2 \\ 0 & 2\end{bmatrix}\\
+        &= \begin{bmatrix} -2 \\ 1 \end{bmatrix}
+    \end{align*}
+    
+    \item bfs 6\par
+    \begin{align*}
+        & B = [A_3, A_4]=\begin{bmatrix} 2 & 0 \\ 2 & 1\end{bmatrix}& N = [A_1, A_2]=\begin{bmatrix} 1 & 3 \\ 0 & 1\end{bmatrix} \\
+        & B^{-1} = \begin{bmatrix} \frac{1}{2} & 0 \\ -1 & 1 \end{bmatrix} & \\
+        & c_B = (1, -1) & c_N =(-1,2)\\
+    \end{align*}
+    \begin{align*}
+         c_N - c_B B^{-1}N &=  \begin{bmatrix} -1 \\ 2 \end{bmatrix}  - \begin{bmatrix} 1 \\ -1 \end{bmatrix} \begin{bmatrix} \frac{1}{2} & 0 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} 1 & 3 \\ 0 & 1\end{bmatrix}\\
+        &= \begin{bmatrix} -2.5 \\ -1.5\end{bmatrix}
+    \end{align*}
+\end{enumerate}
+
+From proposition 5.4, above optimality test shows that bfs 3 to be the optimal solution for the LP problem.
+
+\section{LP page 145, Exercise 5.2.3}
+
+The test for LP with maximization will be $c_N - c_B B^{-1}N \leq 0$. The justification is that the maximization of a function could be easily re-written as minimization of the negation of the function. 
+
+\textit{proof not required, omitted.}
+
+\section{LP page 150, Exercise 5.3.2}
+\begin{align*}
+    & c = (2, -3, -1, 4, 1) & d =(0, 1, 3, 1, 2) \\
+    & cd = 0
+\end{align*}
+From Proposition 5.5, since $cd = 0$, moving in the direction $ d =(0, 1, 3, 1, 2)$ will not improve the objective function.
+
+\section{LP page 150, Exercise 5.3.3}
+
+\begin{align*}
+    & B = [A_4, A_5] = \begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix} & N = [A_3, A_2, A_1] = \begin{bmatrix} 3 & 3 & 2 \\ -1 & 4 & 3\end{bmatrix} \\
+    & B^{-1} = B \\
+    & c_B = (1, 1) & c_N = (-4, -1, 2) \\
+\end{align*}
+\begin{align*}
+    c_N - c_B B^{-1}N &= \begin{bmatrix} -4 \\ -1 \\ 2 \end{bmatrix}  - \begin{bmatrix} 1 \\ 1 \end{bmatrix} \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 3 & 3 & 2 \\ -1 & 4 & 3\end{bmatrix} \\
+    &= \begin{bmatrix} -6 \\ -8 \\ -3 \end{bmatrix}
+\end{align*}
+
+Now, we determine the direction of movement by the three method, respectively.
+
+\begin{enumerate}
+    \item First come, first serve.\par
+    This method will yield $j=1$.
+    \begin{align*}
+    & d_B = -B^{-1}N_{\cdot 1} =-\begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix}\begin{bmatrix} 3 \\ -1 \end{bmatrix} = \begin{bmatrix} -3 \\ 1 \end{bmatrix} \\
+    & d_N = I_{3 \cdot 1} = \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}
+    \end{align*}
+    Thus, the direction of movement is $$d = (d_B, d_N) = (0, 0, 1, -3, 1)$$
+    \item Bland's rule.\par
+    This method will yield $j=3$, since $A_1$ is in column 3. 
+    \begin{align*}
+    & d_B = -B^{-1}N_{\cdot 3} =-\begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix}\begin{bmatrix} 2 \\ 3 \end{bmatrix} = \begin{bmatrix} -2 \\ -3 \end{bmatrix} \\
+    & d_N = I_{3 \cdot 3} = \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}
+    \end{align*}
+    Thus, the direction of movement is $$d = (d_B, d_N) = (1, 0, 0, -2, -3)$$
+    \item Steepest descent.\par
+    This method will yield $j=2$.
+    \begin{align*}
+    & d_B = -B^{-1}N_{\cdot 2} =-\begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix}\begin{bmatrix} 3 \\ 4 \end{bmatrix} = \begin{bmatrix} -3 \\ -4 \end{bmatrix} \\
+    & d_N = I_{3\cdot 2} = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}
+    \end{align*}
+    Thus, the direction of movement is $$d = (d_B, d_N) = (0, 1, 0, -3, -4)$$
+\end{enumerate}
+
+\section{LP page 157, 5.4.3}
+
+Known that $x_B=(x_3,x_2) = (1,2)$ and $d_B=(-\frac{1}{3},-\frac{2}{3})$
+
+Applying the ratio test, $-x_B \varoslash d_B = (3, 3)$,
+
+\begin{enumerate}
+    \item Bland's rule\par
+    This will yields $k=2$, which results in $t^*=3$
+    \item First come, first serve rule\par
+    This will yields $k=1$, which results in $t^*=3$
+\end{enumerate}
+
+\section{LP page 157, 5.4.5}
+\begin{align*}
+    & B = [A_4, A_5] = \begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix} & N = [A_1, A_2, A_3] = \begin{bmatrix} -7 & 2 & 1 \\ -8 & 9 & 6\end{bmatrix} \\
+    & B^{-1} = B \\
+    & x_B = B^{-1}b = I_2 \begin{bmatrix} 25 \\ 35 \end{bmatrix} = \begin{bmatrix} 25 \\ 35 \end{bmatrix} & x_N = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} \\
+    & x = (0, 0, 0, 25, 35) \\
+    & c_B = (0, 0) & c_N = (-7, 6, 4) \\
+\end{align*}
+\begin{align*}
+    c_N - c_B B^{-1}N &= \begin{bmatrix} -7 \\ 6 \\ 4 \end{bmatrix}  - \begin{bmatrix} 0 \\ 0 \end{bmatrix} \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} -7 & 2 & 1 \\ -8 & 9 & 6\end{bmatrix} \\
+    &= \begin{bmatrix} -7 \\ 6 \\ 4 \end{bmatrix}
+\end{align*}
+Following the steepest descent rule, we have $j = 1$.
+\begin{align*}
+& d_B = -B^{-1}N_{\cdot 1} = -\begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix}\begin{bmatrix} -7 \\ -8 \end{bmatrix} = \begin{bmatrix} 7 \\ 8 \end{bmatrix} \\
+& d_N = I_{1\cdot 3} = \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}
+\end{align*}
+Since $d_B = \begin{bmatrix} 7 \\ 8 \end{bmatrix}  \geq 0 $, $t^*=\infty$
+
+\section{LP page 164, 5.5.1}
+Known that $x=(0, 2, 0, 0, 3, 0)$,$j^*=4$, $d=(0, -1, 0, 0, 1, 1)$, $t^*=2$, $k^*=1$
+\begin{align*}
+    & B = [A_2, A_5] & N = [A_1, A_3, A_4, A_6] \\
+\end{align*}
+
+By swapping column $k^*=1$ of B and column $j^*=4$ of N,
+\begin{align*}
+    & B' = [A_6, A_5] & N' = [A_1, A_3, A_4, A_2]\\
+\end{align*}
+
+The new basic variables are $x_B = (x_6, x_5)$, non-basic variables are $x_N = (x_1, x_3, x_4, x_2)$.
+
+\subsection{What are the new B and N matrices?}
+\begin{align*}
+    & B = [A_2, A_5] = \begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix} & N = [A_1, A_3, A_4, A_6] = \begin{bmatrix} 1 & -2 & -1 & 1 \\ 2 & 1 & 2 & -1\end{bmatrix} \\
+\end{align*}
+By swapping column $k^*=1$ of B and column $j^*=4$ of N,
+\begin{align*}
+    & B' = [A_6, A_5] = \begin{bmatrix} 1 & 0 \\ -1 & 1\end{bmatrix} & N' = [A_1, A_3, A_4, A_2] = \begin{bmatrix} 1 & -2 & -1 & 1 \\ 2 & 1 & 2 & 0\end{bmatrix} \\
+\end{align*}
+
+\subsection{Compute the new inverse matrix.}
+$$B'^{-1} = \begin{bmatrix} 1 & 0 \\ 1 & 1\end{bmatrix}$$
+
+\subsection{Compute the new basic variables by using the new inverse matrix.}
+$$x_{B'} = B'^{-1} b = \begin{bmatrix} 1 & 0 \\ 1 & 1\end{bmatrix} \begin{bmatrix} 2 \\ 3\end{bmatrix} = \begin{bmatrix} 2 \\ 5\end{bmatrix}$$
+
+\subsection{Compute the new basic variables by using the $x, t^*, d$.}
+$$x' = x + t^*d = (0, 2, 0, 0, 3, 0) + 2 \cdot (0, -1, 0, 0, 1, 1) = (0, 0, 0, 0, 5, 2)$$
+
+\subsection{Test the new bfs for optimality.}
+$$c_B = (1, -4), c_N = (1, 1, 0, -2)$$
+\begin{align*}
+    c_N - c_B B^{-1} N &= \begin{bmatrix} 1 \\ 1 \\ 0 \\ -2\end{bmatrix} - \begin{bmatrix} 1 \\ -4\end{bmatrix} \begin{bmatrix} 1 & 0 \\ 1 & 1\end{bmatrix} \begin{bmatrix} 1 & -2 & -1 & 1 \\ 2 & 1 & 2 & 0\end{bmatrix} \\
+    &=\begin{bmatrix} 12 \\ -1 \\ 5 \\ 1\end{bmatrix}
+\end{align*}
+Not an optimal solution.
+
+\pagebreak
+
+\section{LP page 176, 5.6.1}
+\begin{align*}
+& c = (1, -2, -3, 1) \\
+& A = \begin{bmatrix} 1 & 2 & -3 & 0 \\ 0 & -3 & 5 & 1\end{bmatrix} \\
+& b =  \begin{bmatrix} 3 \\ 2\end{bmatrix}
+\end{align*}
+\subsection{Iteration 1}
+Initial bfs $$x = (3, 0, 0, 2)$$
+\begin{align*}
+    & B = [A_1, A_4] = \begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix} & N = [A_2, A_3] = \begin{bmatrix} 2 & -3 \\ -3 & 5\end{bmatrix} \\
+    & B^{-1} = B \\
+    & c_B = (1, 1) & c_N = (-2, -3)
+\end{align*}
+\begin{align*}
+    c_N - c_B B^{-1}N &= \begin{bmatrix} -2 \\ -3\end{bmatrix} - \begin{bmatrix} 1 \\ 1\end{bmatrix} \begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix} \begin{bmatrix} 2 & -3 \\ -3 & 5\end{bmatrix}\\
+    &= \begin{bmatrix} -1 \\ -5\end{bmatrix}
+\end{align*}
+Not an optimal bfs. 
+Use steepest descent to decide $j^* = 2$
+\begin{align*}
+    d_B = -B^{-1} N_{\cdot 2} = -\begin{bmatrix} 1 & 0 \\ 0 & 1\end{bmatrix} \begin{bmatrix} -3 \\ 5\end{bmatrix} = \begin{bmatrix} 3 \\ -5 \end{bmatrix}, d_N = I_{2\cdot 2} = \begin{bmatrix} 0 \\ 1\end{bmatrix} \\
+\end{align*}
+$$d = (3, 0, 1, -5)$$
+$t^* = -x_B / d_B = $
+\end{document}
